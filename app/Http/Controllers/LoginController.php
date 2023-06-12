@@ -31,7 +31,7 @@ class LoginController extends Controller
 
         $kredensial = $request->only('username','password');
         if(Auth::attempt($kredensial)){
-        $request->sesion()->regenerate();
+            $request->session()->regenerate();
             $user = Auth::user();
             if($user->level == '1'){
                 return redirect()->intended('beranda');
@@ -45,5 +45,12 @@ class LoginController extends Controller
         return back()->withErrors([
             'username' => 'Username atau password salah'
         ])->onlyInput('username');
+    }
+
+    public function logout(Request $request){
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect('/login');
     }
 }

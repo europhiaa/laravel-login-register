@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\BerandaController;
+use App\Http\Controllers\KasirController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,4 +23,17 @@ use App\Http\Controllers\LoginController;
 Route::controller(LoginController::class)->group(function (){
     Route::get('login','index')->name('login');
     Route::post('login/proses', 'proses');
+    Route::get('logout','logout');
+});
+
+Route::group(['middleware' => ['auth']], function (){
+
+    Route::group(['middleware' => ['cekUserLogin:1']], function (){
+        Route::resource('beranda',BerandaController::class);
+    });
+
+
+    Route::group(['middleware' => ['cekUserLogin:2']], function (){
+        Route::resource('kasir',KasirController::class);
+    });
 });

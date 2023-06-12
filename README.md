@@ -1,7 +1,9 @@
 ## Template
 https://github.com/ColorlibHQ/AdminLTE/releases/tag/v3.1.0
 
-cp .env.example .env
+- cp .env.example .env
+- php artisan optimize:clear
+- php artisan key:generate (generate app key)
 
 ## Langkah
 - php artisan migrate
