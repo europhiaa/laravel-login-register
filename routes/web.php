@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\BerandaController;
 use App\Http\Controllers\KasirController;
+use App\Http\Controllers\LayoutController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,6 +21,9 @@ use App\Http\Controllers\KasirController;
     return view('welcome');
 }); */
 
+Route::get('/', [LayoutController::class, 'index'])->middleware('auth');
+Route::get('/home', [LayoutController::class, 'index'])->middleware('auth');
+
 Route::controller(LoginController::class)->group(function (){
     Route::get('login','index')->name('login');
     Route::post('login/proses', 'proses');
@@ -30,10 +34,16 @@ Route::group(['middleware' => ['auth']], function (){
 
     Route::group(['middleware' => ['cekUserLogin:1']], function (){
         Route::resource('beranda',BerandaController::class);
+        Route::resource('satuan',SatuanController::class);
+        Route::resource('kategori',KategoriController::class);
+        Route::resource('produk',ProdukController::class);
+        Route::resource('pembelian',PembelianController::class);
+        Route::resource('penjualan',PenjualanController::class);
+        Route::resource('laporan',LaporanController::class);
     });
 
 
     Route::group(['middleware' => ['cekUserLogin:2']], function (){
-        Route::resource('kasir',KasirController::class);
+        Route::resource('penjualan',PenjualanController::class);
     });
 });

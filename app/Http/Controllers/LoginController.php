@@ -8,12 +8,16 @@ use Illuminate\Support\Facades\Auth;
 class LoginController extends Controller
 {
     public function index(){
-        if($user = Auth::user()){
+        /* if($user = Auth::user()){
             if($user->level == '1'){
                 return redirect()->intended('beranda');
             } elseif ($user->level == '2'){
                 return redirect()->intended('kasir');
             }
+        } */
+
+        if(Auth::user()){
+            return redirect()->intended('home');
         }
 
         return view('login.view_login');
@@ -33,10 +37,14 @@ class LoginController extends Controller
         if(Auth::attempt($kredensial)){
             $request->session()->regenerate();
             $user = Auth::user();
-            if($user->level == '1'){
+            /* if($user->level == '1'){
                 return redirect()->intended('beranda');
             } elseif ($user->level == '2'){
                 return redirect()->intended('kasir');
+            } */
+
+            if($user){
+                return redirect()->intended('home');
             }
 
             return redirect()->intended('/');

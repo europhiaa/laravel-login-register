@@ -17,3 +17,4 @@ https://github.com/ColorlibHQ/AdminLTE/releases/tag/v3.1.0
 - php artisan make:controller LoginController
 - php artisan make:controller BerandaController
 - php artisan make:controller KasirController
+- php artisan make:controller LayoutController
